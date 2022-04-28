@@ -48,6 +48,27 @@ public class Grafo {
 			listaDeVecinos.get(espia1).add(espia2);
 		}
 	}
+	
+	public void eliminarRelacionEntreEspias(Espia espia1, Espia espia2) {
+		RelacionEntreEspias aux = new RelacionEntreEspias();
+		for(RelacionEntreEspias r : relacionesEntreEspias) {
+			boolean existeRelacion = r.isEspiaEnRelacion(espia1) && r.isEspiaEnRelacion(espia2);
+			if(existeRelacion) {
+				aux.setEspia1(espia1).setEspia2(espia2).setPosibilidadDeIntercepcion(r.getPosibilidadDeIntercepcion());
+			}
+		}
+		eliminarVecinoAlNinja(aux.getEspia1(), aux.getEspia2());
+		eliminarVecinoAlNinja(aux.getEspia2(), aux.getEspia1());
+		relacionesEntreEspias.remove(aux);
+	}
+	
+	private void eliminarVecinoAlNinja(Espia espia1, Espia espia2) {
+		if(!listaDeVecinos.containsKey(espia1)) {
+			return;
+		}else {
+			listaDeVecinos.get(espia1).remove(espia2);
+		}
+	}
 
 	public boolean chequearExistenciaDeEspia(Espia espia1) {
 		return listaDeVecinos.containsKey(espia1);
@@ -73,12 +94,11 @@ public class Grafo {
 	public Espia getEspiaEspecifico(int i) {
 		return espias.get(i);
 	}
-	//por que un espia deberia tener un id o un indice? 
+	
 	public int indiceEspia(Espia e) {
 		return espias.indexOf(e);
 	}
 	
-	//de ser que el espia tenga sus vecinos, se lo preguntamos a el
 	public Set<Espia> DameVecinosDeUnEspia(Espia p){
 		
 		Set<Espia> ret= new HashSet<Espia>();
