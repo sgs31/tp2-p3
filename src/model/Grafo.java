@@ -80,7 +80,7 @@ public class Grafo {
 	}
 
 	public ArrayList<Espia> getEspias() {
-		return espias;
+		return (ArrayList<Espia>) espias.clone();
 	}
 
 	public int getCantidadDeEspias() {
@@ -88,7 +88,7 @@ public class Grafo {
 	}
 
 	public HashMap<Espia, HashSet<Espia>> getListaDeVecinos() {
-		return listaDeVecinos;
+		return (HashMap<Espia, HashSet<Espia>>) listaDeVecinos.clone();
 	}
 	
 	public Espia getEspiaEspecifico(int i) {
