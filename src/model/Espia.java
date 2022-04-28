@@ -1,21 +1,34 @@
 package model;
 
+import java.util.Objects;
+
 public class Espia {
 	
-	private int numeroDeEspia;
-	private int posibilidadDeIntercepcion;
+	private String nombre;
 	
-	public Espia(int numeroDeEspia, int posibilidadDeIntercepcion) {
-		this.numeroDeEspia = numeroDeEspia;
-		this.posibilidadDeIntercepcion = posibilidadDeIntercepcion;
+	public Espia(String nombre) {
+		this.nombre = nombre;	
 	}
 
-	public int getNumeroDeEspia() {
-		return numeroDeEspia;
+	@Override
+	public int hashCode() {
+		return Objects.hash(nombre);
 	}
 
-	public int getPosibilidadDeIntercepcion() {
-		return posibilidadDeIntercepcion;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Espia other = (Espia) obj;
+		return Objects.equals(nombre, other.nombre);
+	}
+
+	public String getNombre() {
+		return nombre;
 	}
 
 

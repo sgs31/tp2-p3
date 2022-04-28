@@ -12,7 +12,7 @@ public class BFS {
 	private static void RecorridoBFS(Grafo g, Espia espiaOrigen) {
 		ListaDeEspiasBFS = new ArrayList<Espia>();
 		ListaDeEspiasBFS.add(espiaOrigen);
-		espiasDefinidos= new boolean [g.getCantidadDeEspias()];
+		espiasDefinidos= new boolean[g.getCantidadDeEspias()];
 	}
 	
 	
@@ -27,8 +27,6 @@ public class BFS {
 		return achievable(g, g.getEspiaEspecifico(0)).size()==g.getCantidadDeEspias();
 			
 	}
-	
-	
 	
 	public static Set<Espia> achievable(Grafo g, Espia espiaOrigen){
 		Set<Espia> ret= new HashSet<Espia>();
@@ -46,17 +44,14 @@ public class BFS {
 		return ret;
 	}
 
-
 	private static void agregarVecinosPendientes(Grafo g, Espia i) {
 
 		for (Espia espia : g.DameVecinosDeUnEspia(i)) {
 			
 		if (espiasDefinidos[g.indiceEspia(espia)] == false && !ListaDeEspiasBFS.contains(espia)) 
-			ListaDeEspiasBFS.add(espia);
-		
+			ListaDeEspiasBFS.add(espia);	
 		
 		}	
-	}
-	
+	}	
 }
 	

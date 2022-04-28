@@ -4,31 +4,35 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Kruskal {
-	private  int[]link;
+	
+	private int[] link;
 	private Grafo grafo;
 	private ArrayList<RelacionEntreEspias> listaDeRelaciones;
 	
 	public Kruskal(Grafo grafo) {
-		this.grafo=grafo;
-		listaDeRelaciones= new ArrayList<RelacionEntreEspias>();
-		listaDeRelaciones=grafo.getRelacionesEntreEspias();
+		this.grafo = grafo;
+//		listaDeRelaciones = new ArrayList<RelacionEntreEspias>();
+		listaDeRelaciones = grafo.getRelacionesEntreEspias();
 	}
 	
+	//IMPLEMENTACION DE UNION-FIND
 	private void initRoot() {
-		link= new int[grafo.getCantidadDeEspias()];
+		link = new int[grafo.getCantidadDeEspias()];
 		for (int j = 0; j < link.length; j++) {
-			link[j]=j;
+			link[j] = j;
 		}
 	}
 	
+	//IMPLEMENTACION DE UNION-FIND
 	//Determina si dos espías están en la misma componente conexa
 	private int encontrarEspia(int i) {
 		if (i== link[i]) {
 			return i;
 		}
-		return link[i]= encontrarEspia(link[i]);
+		return link[i] = encontrarEspia(link[i]);
 	}
 	
+	//IMPLEMENTACION DE UNION-FIND
 	//Modifica la estructura de los árboles
 	private void union(int i, int j) {
 		int rootI=encontrarEspia(i);
@@ -36,21 +40,28 @@ public class Kruskal {
 		link[rootI]=rootJ;
 	}
 	
-	public Grafo minimalGeneratorTree() {
-		Collections.sort(listaDeRelaciones);
-		ArrayList<RelacionEntreEspias> aux=new ArrayList<>();
+	public Grafo arbolGeneradorMinimo() {
+		Grafo arbolGeneradorMinimo;
+		
+		listaDeRelaciones.sort(null);
+		ArrayList<RelacionEntreEspias> aux = new ArrayList<>();
 		initRoot();
-		int connectedComponent= grafo.getCantidadDeEspias();
-		int position=0;
-		while ((connectedComponent!=1 && position < grafo.getCantidadDeRelaciones())) {
-			RelacionEntreEspias current= listaDeRelaciones.get(position);
+		
+		int connectedComponent = grafo.getCantidadDeEspias();
+		int posicion = 0;
+		
+		while(connectedComponent!=1 && posicion < grafo.getCantidadDeRelaciones()) {
+			RelacionEntreEspias current = listaDeRelaciones.get(posicion);
 			if (encontrarEspia(current.getEspia1().getId())!=encontrarEspia(current.getEspia2().getId())) {
 				union(current.getEspia1().getId(), current.getEspia2().getId());
 				aux.add(current);
-				connectedComponent --;
+				connectedComponent --;//?
 			}
-			 position++;
+			 posicion++;//?
 		}
-		return new Grafo(aux, grafo.getCantidadDeEspias());
+		
+		arbolGeneradorMinimo = new Grafo(aux, grafo.getCantidadDeEspias());
+		
+		return arbolGeneradorMinimo;
 	}
 }
