@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class ObjetoArista implements Comparable<ObjetoArista>{
+
 		private Espia espia1;
 		private Espia espia2;
 		private Integer posibilidadDeIntercepcion;
@@ -78,6 +79,12 @@ public class ObjetoArista implements Comparable<ObjetoArista>{
 				return 0;
 			else
 				return 1;
+		}
+		
+		@Override
+		public String toString() {
+			return "ObjetoArista [espia1=" + espia1 + ", espia2=" + espia2 + ", posibilidadDeIntercepcion="
+					+ posibilidadDeIntercepcion + "]";
 		}
 
 		

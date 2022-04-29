@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Espia {
 	
+	
+
 	private String nombre;
 	
 	public Espia(String nombre) {
@@ -31,5 +33,8 @@ public class Espia {
 		return nombre;
 	}
 
-
+	@Override
+	public String toString() {
+		return "Espia [nombre=" + nombre + "]";
+	}
 }

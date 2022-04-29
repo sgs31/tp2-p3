@@ -18,6 +18,13 @@ public class Grafo {
 		this.espias = new ArrayList<Espia>();
 		this.listaDeVecinos = new HashMap<Espia, HashSet<Espia>>();
 	}
+	
+	public Grafo(ArrayList<Espia> espias) {
+		this.cantidadDeEspias = espias.size();
+		this.listaDeAristas = new ArrayList<ObjetoArista>();
+		this.espias = espias;
+		this.listaDeVecinos = new HashMap<Espia, HashSet<Espia>>();	
+	}
 
 	public boolean agregarEspia(String nombre) {
 		
@@ -52,6 +59,8 @@ public class Grafo {
 		
 		Espia espia1 = new Espia(espia1Nombre);
 		Espia espia2 = new Espia(espia2Nombre);
+		
+		if(!espias.contains(espia1) || !espias.contains(espia2)) return aristaAgregada;
 		
 		chequearRelacionesCirculares(espia1,espia2);
 
@@ -125,7 +134,7 @@ public class Grafo {
 		return (HashMap<Espia, HashSet<Espia>>) listaDeVecinos.clone();
 	}
 
-	public Espia getEspiaEspecifico(int i) {
+	public Espia getEspia(int i) {
 		return espias.get(i);
 	}
 
@@ -145,5 +154,10 @@ public class Grafo {
 
 	public int getCantidadDeRelaciones() {
 		return listaDeAristas.size();
+	}
+	
+	public void eliminarAristas() {
+		this.listaDeAristas = new ArrayList<ObjetoArista>();
+		this.listaDeVecinos = new HashMap<Espia, HashSet<Espia>>();
 	}
 }

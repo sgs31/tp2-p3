@@ -24,7 +24,7 @@ public class BFS {
 		if(g.getCantidadDeEspias()==0) {
 			return true;
 		}
-		return achievable(g, g.getEspiaEspecifico(0)).size()==g.getCantidadDeEspias();
+		return achievable(g, g.getEspia(0)).size()==g.getCantidadDeEspias();
 			
 	}
 	

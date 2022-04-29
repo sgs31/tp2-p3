@@ -70,10 +70,16 @@ public class GrafoTest {
 		g.agregarEspia("Tom");
 		g.agregarEspia("Juan");
 		g.agregarRelacionEntreEspias("Tom", "Juan", 2);
-		
-		
 			
 		assertEquals(2, g.getListaDeVecinos().size());		
+	}
+	
+	@Test
+	public void agregarRelacionConEspiasNoIncluidasEnGrafo() {
+		Grafo g = new Grafo();
+		
+		g.agregarRelacionEntreEspias("jose", "maria", 2);
+		assertEquals(0,g.getListaDeVecinos().size());
 	}
 	
 	
