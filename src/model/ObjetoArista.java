@@ -4,18 +4,18 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class RelacionEntreEspias implements Comparable<RelacionEntreEspias>{
+public class ObjetoArista implements Comparable<ObjetoArista>{
 		private Espia espia1;
 		private Espia espia2;
 		private Integer posibilidadDeIntercepcion;
 
-		public RelacionEntreEspias(Espia espia1, Espia espia2, Integer posibilidadDeIntercepcion ) {
+		public ObjetoArista(Espia espia1, Espia espia2, Integer posibilidadDeIntercepcion ) {
 			this.espia1= espia1;
 			this.espia2= espia2;
 			this.posibilidadDeIntercepcion = posibilidadDeIntercepcion;
 		}
 		
-		public RelacionEntreEspias() {
+		public ObjetoArista() {
 			espia1 = null;
 			espia2 = null;
 			posibilidadDeIntercepcion = null;
@@ -33,15 +33,15 @@ public class RelacionEntreEspias implements Comparable<RelacionEntreEspias>{
 			return posibilidadDeIntercepcion;
 		}
 		
-		public RelacionEntreEspias setEspia1(Espia espia1) {
+		public ObjetoArista setEspia1(Espia espia1) {
 			this.espia1 = espia1;
 			return this;
 		}
-		public RelacionEntreEspias setEspia2(Espia espia2) {
+		public ObjetoArista setEspia2(Espia espia2) {
 			this.espia2 = espia2;
 			return this;
 		}
-		public RelacionEntreEspias setPosibilidadDeIntercepcion(Integer posibilidadDeIntercepcion) {
+		public ObjetoArista setPosibilidadDeIntercepcion(Integer posibilidadDeIntercepcion) {
 			this.posibilidadDeIntercepcion = posibilidadDeIntercepcion;
 			return this;
 		}
@@ -66,12 +66,12 @@ public class RelacionEntreEspias implements Comparable<RelacionEntreEspias>{
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			RelacionEntreEspias other = (RelacionEntreEspias) obj;
+			ObjetoArista other = (ObjetoArista) obj;
 			return isEspiaEnRelacion(other.espia1) && isEspiaEnRelacion(other.espia2);
 		}
 
 		@Override
-		public int compareTo(RelacionEntreEspias o) {
+		public int compareTo(ObjetoArista o) {
 			if(getPosibilidadDeIntercepcion() < o.getPosibilidadDeIntercepcion())
 				return -1;
 			else if (getPosibilidadDeIntercepcion() == o.getPosibilidadDeIntercepcion())

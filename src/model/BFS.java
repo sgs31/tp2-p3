@@ -46,7 +46,7 @@ public class BFS {
 
 	private static void agregarVecinosPendientes(Grafo g, Espia i) {
 
-		for (Espia espia : g.DameVecinosDeUnEspia(i)) {
+		for (Espia espia : g.getVecinosDeUnEspia(i)) {
 			
 		if (espiasDefinidos[g.indiceEspia(espia)] == false && !ListaDeEspiasBFS.contains(espia)) 
 			ListaDeEspiasBFS.add(espia);	

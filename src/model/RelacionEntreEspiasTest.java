@@ -8,16 +8,16 @@ import org.junit.Test;
 
 public class RelacionEntreEspiasTest {
 	
-	ArrayList<RelacionEntreEspias> relaciones;
+	ArrayList<ObjetoArista> relaciones;
 	
 	@Before
 	public void init() {
 		relaciones = new ArrayList<>();
-		relaciones.add(new RelacionEntreEspias(new Espia("Carlos"), new Espia("Vale"), 9));
-		relaciones.add(new RelacionEntreEspias(new Espia("Agustin"), new Espia("Carlos"), 8));
-		relaciones.add(new RelacionEntreEspias(new Espia("Mica"), new Espia("Fran"), 7));
-		relaciones.add(new RelacionEntreEspias(new Espia("Fran"), new Espia("Javier"), 3));
-		relaciones.add(new RelacionEntreEspias(new Espia("Mica"), new Espia("Jorge"), 8));
+		relaciones.add(new ObjetoArista(new Espia("Carlos"), new Espia("Vale"), 9));
+		relaciones.add(new ObjetoArista(new Espia("Agustin"), new Espia("Carlos"), 8));
+		relaciones.add(new ObjetoArista(new Espia("Mica"), new Espia("Fran"), 7));
+		relaciones.add(new ObjetoArista(new Espia("Fran"), new Espia("Javier"), 3));
+		relaciones.add(new ObjetoArista(new Espia("Mica"), new Espia("Jorge"), 8));
 	}
 	
 	@Test

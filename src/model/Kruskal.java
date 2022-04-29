@@ -6,7 +6,7 @@ import java.util.Collections;
 public class Kruskal {
 	
 	private Grafo grafo;
-	private ArrayList<RelacionEntreEspias> listaDeRelaciones;
+	private ArrayList<ObjetoArista> listaDeRelaciones;
 	
 	public Kruskal(Grafo grafo) {
 		this.grafo = grafo;
@@ -22,7 +22,7 @@ public class Kruskal {
 		int posicion = 0;
 		
 		while(connectedComponent!=grafo.getCantidadDeEspias()-1) {
-			RelacionEntreEspias relacionActual = listaDeRelaciones.get(posicion);
+			ObjetoArista relacionActual = listaDeRelaciones.get(posicion);
 			
 			if(!isRelacionFormaCiclo(arbolGeneradorMinimo.getRelacionesEntreEspias(), relacionActual)) {
 				String espia1 = relacionActual.getEspia1().getNombre();
@@ -32,7 +32,7 @@ public class Kruskal {
 				Integer peso = relacionActual.getPosibilidadDeIntercepcion();
 				arbolGeneradorMinimo.agregarEspia(espia1);
 				arbolGeneradorMinimo.agregarEspia(espia2);
-				arbolGeneradorMinimo.agregarRelacionEntreEspias(e1, e2, peso);
+				arbolGeneradorMinimo.agregarRelacionEntreEspias(e1.getNombre(), e2.getNombre(), peso);
 			}
 			 posicion++;
 			 if(posicion==listaDeRelaciones.size()) {
@@ -43,11 +43,11 @@ public class Kruskal {
 		return arbolGeneradorMinimo;
 	}
 	
-	public boolean isRelacionFormaCiclo(ArrayList<RelacionEntreEspias> relaciones, RelacionEntreEspias r) {
+	public boolean isRelacionFormaCiclo(ArrayList<ObjetoArista> relaciones, ObjetoArista r) {
 		boolean isEspia1 = false;
 		boolean isEspia2 = false;
 		
-		for (RelacionEntreEspias relacionEntreEspia : relaciones) {
+		for (ObjetoArista relacionEntreEspia : relaciones) {
 			if(relacionEntreEspia.isEspiaEnRelacion(r.getEspia1())) isEspia1 = true;
 			if(relacionEntreEspia.isEspiaEnRelacion(r.getEspia2())) isEspia2 = true;
 		}
