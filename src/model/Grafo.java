@@ -53,7 +53,7 @@ public class Grafo {
 	}
 	
 	
-	public boolean agregarRelacionEntreEspias(String espia1Nombre, String espia2Nombre, Integer peso) {
+	 boolean agregarRelacionEntreEspias(String espia1Nombre, String espia2Nombre, Integer peso) {
 
 		boolean aristaAgregada = false;
 		

@@ -16,19 +16,19 @@ public class BFS {
 	}
 	
 	
-	public static boolean isConnectedGraph(Grafo g) {
+	public static boolean esConexo(Grafo g) {
 		if(g==null) {
-			throw new IllegalArgumentException("El grafo es nulo.");
+			throw new IllegalArgumentException("El grafo es no existe.");
 
 		}
 		if(g.getCantidadDeEspias()==0) {
 			return true;
 		}
-		return achievable(g, g.getEspia(0)).size()==g.getCantidadDeEspias();
+		return alcanzables(g, g.getEspia(0)).size()==g.getCantidadDeEspias();
 			
 	}
 	
-	public static Set<Espia> achievable(Grafo g, Espia espiaOrigen){
+	public static Set<Espia> alcanzables(Grafo g, Espia espiaOrigen){
 		Set<Espia> ret= new HashSet<Espia>();
 		RecorridoBFS(g, espiaOrigen);
 		
