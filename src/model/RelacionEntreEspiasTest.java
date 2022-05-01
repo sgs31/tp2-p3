@@ -13,11 +13,11 @@ public class RelacionEntreEspiasTest {
 	@Before
 	public void init() {
 		relaciones = new ArrayList<>();
-		relaciones.add(new ObjetoArista(new Espia("Carlos"), new Espia("Vale"), 9));
-		relaciones.add(new ObjetoArista(new Espia("Agustin"), new Espia("Carlos"), 8));
-		relaciones.add(new ObjetoArista(new Espia("Mica"), new Espia("Fran"), 7));
-		relaciones.add(new ObjetoArista(new Espia("Fran"), new Espia("Javier"), 3));
-		relaciones.add(new ObjetoArista(new Espia("Mica"), new Espia("Jorge"), 8));
+		relaciones.add(new ObjetoArista("Carlos","Vale", 9));
+		relaciones.add(new ObjetoArista("Agustin", "Carlos", 8));
+		relaciones.add(new ObjetoArista("Mica","Fran", 7));
+		relaciones.add(new ObjetoArista("Fran","Javier", 3));
+		relaciones.add(new ObjetoArista("Mica","Jorge", 8));
 	}
 	
 	@Test
@@ -29,9 +29,8 @@ public class RelacionEntreEspiasTest {
 	
 	@Test
 	public void isEspiaEnRelacionTrueTest() {
-		Espia Mica = new Espia("Mica");
-		assertTrue(relaciones.get(2).isEspiaEnRelacion(Mica));
-		assertTrue(relaciones.get(4).isEspiaEnRelacion(Mica));
+		assertTrue(relaciones.get(2).isEspiaEnRelacion("Mica"));
+		assertTrue(relaciones.get(4).isEspiaEnRelacion("Mica"));
 	}
 	
 	@Test
