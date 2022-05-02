@@ -8,39 +8,35 @@ import java.util.Set;
 public class Grafo {
 
 	private ArrayList<ObjetoArista> listaDeAristas;
-	private ArrayList<Espia> espias;
-	private int cantidadDeEspias;
-	private HashMap<Espia, HashSet<Espia>> listaDeVecinos;
+	private ArrayList<String> espias;
+	private HashMap<String, HashSet<String>> listaDeVecinos;
 
 	public Grafo() {
-		this.cantidadDeEspias = 0;
 		this.listaDeAristas = new ArrayList<ObjetoArista>();
-		this.espias = new ArrayList<Espia>();
-		this.listaDeVecinos = new HashMap<Espia, HashSet<Espia>>();
+		this.espias = new ArrayList<String>();
+		this.listaDeVecinos = new HashMap<String, HashSet<String>>();
 	}
 	
-	public Grafo(ArrayList<Espia> espias) {
-		this.cantidadDeEspias = espias.size();
+	public Grafo(ArrayList<String> espias) {
 		this.listaDeAristas = new ArrayList<ObjetoArista>();
 		this.espias = espias;
-		this.listaDeVecinos = new HashMap<Espia, HashSet<Espia>>();	
+		this.listaDeVecinos = new HashMap<String, HashSet<String>>();	
 	}
 
 	public boolean agregarEspia(String nombre) {
 		
-		Espia espiaNuevo = new Espia(nombre);
 		boolean agregado = false;
 		
 		chequearNombreDeEspiaValido(nombre);
-		chequearEspiaExistenteEnGrafo(espiaNuevo);
+		chequearEspiaExistenteEnGrafo(nombre);
 		
-		espias.add(espiaNuevo);
+		espias.add(nombre);
 		agregado = true;
 
 		return agregado;
 	}
 
-	private void chequearEspiaExistenteEnGrafo(Espia posibleEspia) {
+	private void chequearEspiaExistenteEnGrafo(String posibleEspia) {
 		if (espias.contains(posibleEspia) ) {
 			throw new IllegalArgumentException("¡Ese espía ya existe!");
 		}
@@ -53,12 +49,10 @@ public class Grafo {
 	}
 	
 	
-	 boolean agregarRelacionEntreEspias(String espia1Nombre, String espia2Nombre, Integer peso) {
-
+	 boolean agregarRelacionEntreEspias(String espia1, String espia2, Integer peso) {
+		 //Hacer funcion que chequee que la arista no sea negativa
+		 //Chequear que los espias existen
 		boolean aristaAgregada = false;
-		
-		Espia espia1 = new Espia(espia1Nombre);
-		Espia espia2 = new Espia(espia2Nombre);
 		
 		if(!espias.contains(espia1) || !espias.contains(espia2)) return aristaAgregada;
 		
@@ -76,16 +70,16 @@ public class Grafo {
 		return aristaAgregada;
 	}
 	
-	void chequearRelacionesCirculares(Espia espia1, Espia espia2) {
+	void chequearRelacionesCirculares(String espia1, String espia2) {
 		if (espia1.equals(espia2)) {
 			throw new IllegalArgumentException("Un espía no puede enviarse el mensaje a sí mismo.");
 		}
 	}
 	
 
-	private void agregarAListaDeVecinos(Espia espia1, Espia espia2) {
+	private void agregarAListaDeVecinos(String espia1, String espia2) {
 		if (!listaDeVecinos.containsKey(espia1)) {
-			listaDeVecinos.put(espia1, new HashSet<Espia>());
+			listaDeVecinos.put(espia1, new HashSet<String>());
 			listaDeVecinos.get(espia1).add(espia2);
 		} else {
 			listaDeVecinos.get(espia1).add(espia2);
@@ -113,7 +107,7 @@ public class Grafo {
 //		}
 //	}
 
-	public boolean getExistenciaDeEspia(Espia espia1) {
+	public boolean getExistenciaDeEspia(String espia1) {
 		return listaDeVecinos.containsKey(espia1);
 	}
 
@@ -122,29 +116,29 @@ public class Grafo {
 		return temp;
 	}
 
-	public ArrayList<Espia> getListaDeEspias() {
-		return (ArrayList<Espia>) espias.clone();
+	public ArrayList<String> getListaDeEspias() {
+		return (ArrayList<String>) espias.clone();
 	}
 
 	public int getCantidadDeEspias() {
-		return cantidadDeEspias;
+		return espias.size();
 	}
 
-	public HashMap<Espia, HashSet<Espia>> getListaDeVecinos() {
-		return (HashMap<Espia, HashSet<Espia>>) listaDeVecinos.clone();
+	public HashMap<String, HashSet<String>> getListaDeVecinos() {
+		return (HashMap<String, HashSet<String>>) listaDeVecinos.clone();
 	}
 
-	public Espia getEspia(int i) {
+	public String getEspia(int i) {
 		return espias.get(i);
 	}
 
-	public int indiceEspia(Espia e) {
+	public int indiceEspia(String e) {
 		return espias.indexOf(e);
 	}
 
-	public Set<Espia> getVecinosDeUnEspia(Espia p) {
+	public Set<String> getVecinosDeUnEspia(String p) {
 
-		Set<Espia> ret = new HashSet<Espia>();
+		Set<String> ret = new HashSet<String>();
 
 		if (getExistenciaDeEspia(p))
 			ret = listaDeVecinos.get(p);
@@ -158,6 +152,15 @@ public class Grafo {
 	
 	public void eliminarAristas() {
 		this.listaDeAristas = new ArrayList<ObjetoArista>();
-		this.listaDeVecinos = new HashMap<Espia, HashSet<Espia>>();
+		this.listaDeVecinos = new HashMap<String, HashSet<String>>();
 	}
+	
+	public String toString() {
+		String listaEspias = "Espias: ";
+		String relaciones = "Relaciones: ";
+		
+		
+		return listaEspias + espias.toString() + ". Relaciones: " + this.listaDeVecinos.toString(); 
+	}
+	
 }

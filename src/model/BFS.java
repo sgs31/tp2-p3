@@ -6,14 +6,8 @@ import java.util.Set;
 
 public class BFS {
 	
-	private static boolean [] espiasDefinidos;
-	private static ArrayList<Espia> ListaDeEspiasBFS;
-	
-	private static void RecorridoBFS(Grafo g, Espia espiaOrigen) {
-		ListaDeEspiasBFS = new ArrayList<Espia>();
-		ListaDeEspiasBFS.add(espiaOrigen);
-		espiasDefinidos= new boolean[g.getCantidadDeEspias()];
-	}
+	private static boolean [] marcados;
+	private static ArrayList<String> L;
 	
 	
 	public static boolean esConexo(Grafo g) {
@@ -28,28 +22,35 @@ public class BFS {
 			
 	}
 	
-	public static Set<Espia> alcanzables(Grafo g, Espia espiaOrigen){
-		Set<Espia> ret= new HashSet<Espia>();
-		RecorridoBFS(g, espiaOrigen);
+	public static Set<String> alcanzables(Grafo g, String espiaOrigen){
+		Set<String> ret= new HashSet<String>();
+		inicializar(g, espiaOrigen);
 		
-		while(ListaDeEspiasBFS.size()>0) {
-			Espia i=ListaDeEspiasBFS.get(0);
-			espiasDefinidos[g.indiceEspia(i)]=true;
+		while(L.size()>0) {
+			String i=L.get(0);
+			marcados[g.indiceEspia(i)]=true;
 			ret.add(i);
 			
+			
 			agregarVecinosPendientes(g, i);
-			ListaDeEspiasBFS.remove(0);
+			L.remove(0);
 			
 		}
 		return ret;
 	}
+	
+	private static void inicializar(Grafo g, String espiaOrigen) {
+		L = new ArrayList<String>();
+		L.add(espiaOrigen);
+		marcados= new boolean[g.getCantidadDeEspias()];
+	}
 
-	private static void agregarVecinosPendientes(Grafo g, Espia i) {
+	private static void agregarVecinosPendientes(Grafo g, String i) {
 
-		for (Espia espia : g.getVecinosDeUnEspia(i)) {
+		for (String espia : g.getVecinosDeUnEspia(i)) {
 			
-		if (espiasDefinidos[g.indiceEspia(espia)] == false && !ListaDeEspiasBFS.contains(espia)) 
-			ListaDeEspiasBFS.add(espia);	
+		if (marcados[g.indiceEspia(espia)] == false && !L.contains(espia)) 
+			L.add(espia);	
 		
 		}	
 	}	

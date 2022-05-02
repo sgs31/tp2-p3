@@ -6,11 +6,11 @@ import java.util.Set;
 
 public class ObjetoArista implements Comparable<ObjetoArista>{
 
-		private Espia espia1;
-		private Espia espia2;
+		private String espia1;
+		private String espia2;
 		private Integer posibilidadDeIntercepcion;
 
-		public ObjetoArista(Espia espia1, Espia espia2, Integer posibilidadDeIntercepcion ) {
+		public ObjetoArista(String espia1, String espia2, Integer posibilidadDeIntercepcion ) {
 			this.espia1= espia1;
 			this.espia2= espia2;
 			this.posibilidadDeIntercepcion = posibilidadDeIntercepcion;
@@ -22,11 +22,11 @@ public class ObjetoArista implements Comparable<ObjetoArista>{
 			posibilidadDeIntercepcion = null;
 		}
 		
-		public Espia getEspia1() {
+		public String getEspia1() {
 			return espia1;
 		}
 		
-		public Espia getEspia2() {
+		public String getEspia2() {
 			return espia2;
 		}
 		
@@ -34,21 +34,8 @@ public class ObjetoArista implements Comparable<ObjetoArista>{
 			return posibilidadDeIntercepcion;
 		}
 		
-		public ObjetoArista setEspia1(Espia espia1) {
-			this.espia1 = espia1;
-			return this;
-		}
-		public ObjetoArista setEspia2(Espia espia2) {
-			this.espia2 = espia2;
-			return this;
-		}
-		public ObjetoArista setPosibilidadDeIntercepcion(Integer posibilidadDeIntercepcion) {
-			this.posibilidadDeIntercepcion = posibilidadDeIntercepcion;
-			return this;
-		}
-		
-		public boolean isEspiaEnRelacion(Espia espia) {
-			Set<Espia> temp = new HashSet<Espia>();
+		public boolean isEspiaEnRelacion(String espia) {
+			Set<String> temp = new HashSet<String>();
 			temp.add(this.espia1);
 			temp.add(this.espia2);
 			return temp.contains(espia);
