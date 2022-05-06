@@ -49,7 +49,7 @@ public class Grafo {
 	}
 	
 	
-	 boolean agregarRelacionEntreEspias(String espia1, String espia2, Integer peso) {
+	 public boolean agregarRelacionEntreEspias(String espia1, String espia2, Integer peso) {
 		 //Hacer funcion que chequee que la arista no sea negativa
 		 //Chequear que los espias existen
 		boolean aristaAgregada = false;
@@ -86,38 +86,37 @@ public class Grafo {
 		}
 	}
 
-//	public void eliminarRelacionEntreEspias(Espia espia1, Espia espia2) {
-//		RelacionEntreEspias aux = new RelacionEntreEspias();
-//		for (RelacionEntreEspias r : relacionesEntreEspias) {
-//			boolean existeRelacion = r.isEspiaEnRelacion(espia1) && r.isEspiaEnRelacion(espia2);
-//			if (existeRelacion) {
-//				aux.setEspia1(espia1).setEspia2(espia2).setPosibilidadDeIntercepcion(r.getPosibilidadDeIntercepcion());
-//			}
-//		}
-//		eliminarVecinoAlNinja(aux.getEspia1(), aux.getEspia2());
-//		eliminarVecinoAlNinja(aux.getEspia2(), aux.getEspia1());
-//		relacionesEntreEspias.remove(aux);
-//	}
-//
-//	private void eliminarVecinoAlNinja(Espia espia1, Espia espia2) {
-//		if (!listaDeVecinos.containsKey(espia1)) {
-//			return;
-//		} else {
-//			listaDeVecinos.get(espia1).remove(espia2);
-//		}
-//	}
+	public void eliminarRelacionEntreEspias(String espia1, String espia2) {
+		ObjetoArista aux = new ObjetoArista();
+		for (ObjetoArista r : listaDeAristas) {
+			boolean existeRelacion = r.isEspiaEnRelacion(espia1) && r.isEspiaEnRelacion(espia2);
+			if (existeRelacion) {
+				aux.setEspia1(espia1).setEspia2(espia2).setPosibilidadDeIntercepcion(r.getPosibilidadDeIntercepcion());
+				eliminarVecinoAlEspia(espia1, espia2);
+				eliminarVecinoAlEspia(espia2, espia1);
+				listaDeAristas.remove(aux);
+			}
+		}
+	}
+
+	private void eliminarVecinoAlEspia(String espia1, String espia2) {
+		if (!listaDeVecinos.containsKey(espia1)) {
+			return;
+		} else {
+			listaDeVecinos.get(espia1).remove(espia2);
+		}
+	}
 
 	public boolean getExistenciaDeEspia(String espia1) {
 		return listaDeVecinos.containsKey(espia1);
 	}
 
 	public ArrayList<ObjetoArista> getRelacionesEntreEspias() {
-		ArrayList<ObjetoArista> temp = (ArrayList<ObjetoArista>) listaDeAristas.clone();
-		return temp;
+		return listaDeAristas;
 	}
 
 	public ArrayList<String> getListaDeEspias() {
-		return (ArrayList<String>) espias.clone();
+		return espias;
 	}
 
 	public int getCantidadDeEspias() {
@@ -125,7 +124,7 @@ public class Grafo {
 	}
 
 	public HashMap<String, HashSet<String>> getListaDeVecinos() {
-		return (HashMap<String, HashSet<String>>) listaDeVecinos.clone();
+		return listaDeVecinos;
 	}
 
 	public String getEspia(int i) {

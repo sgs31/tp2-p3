@@ -4,31 +4,41 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JMenuItem;
-import javax.swing.JMenu;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Font;
-import javax.swing.JMenuBar;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import model.Grafo;
+import vistas.util.MessageWindow;
+import vistas.util.Observador;
+import vistas.util.Sujeto;
+
 import javax.swing.JPopupMenu;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Hashtable;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.JSlider;
+import javax.swing.SwingConstants;
+import java.awt.Rectangle;
+import java.awt.GridLayout;
 
-public class principal {
-
+public class principal implements Observador{
+	
 	private JFrame frmTemibleOperarioDel;
-	private JTextField inputEspias;
+	private JTextField inputEspia;
+	private Grafo grafo;
+	private JPanel espiasContainer;
+	private JPanel conexionesContainer;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -42,31 +52,28 @@ public class principal {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public principal() {
+		grafo = new Grafo();
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
+		principal ref = this;
 		frmTemibleOperarioDel = new JFrame();
 		frmTemibleOperarioDel.setTitle("Temible operario del recontraespionaje");
-		frmTemibleOperarioDel.setBounds(100, 100, 756, 500);
+		frmTemibleOperarioDel.setBounds(100, 100, 734, 491);
 		frmTemibleOperarioDel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmTemibleOperarioDel.getContentPane().setLayout(null);
 		
-		JLabel indicadorEspiasContainer = new JLabel("Nuestros espias:");
-		indicadorEspiasContainer.setFont(new Font("Miriam Mono CLM", Font.PLAIN, 11));
-		indicadorEspiasContainer.setBounds(80, 123, 125, 23);
+		JLabel indicadorEspiasContainer = new JLabel("Nuestros espias");
+		indicadorEspiasContainer.setHorizontalAlignment(SwingConstants.CENTER);
+		indicadorEspiasContainer.setFont(new Font("Miriam Mono CLM", Font.BOLD, 11));
+		indicadorEspiasContainer.setBounds(64, 123, 165, 23);
 		frmTemibleOperarioDel.getContentPane().add(indicadorEspiasContainer);
 		
 		JLabel misionLabel = new JLabel("MISION: Temible operario del recontraespionaje.");
 		misionLabel.setFont(new Font("Miriam Mono CLM", Font.BOLD, 14));
-		misionLabel.setBounds(64, 11, 388, 36);
+		misionLabel.setBounds(64, 11, 588, 36);
 		frmTemibleOperarioDel.getContentPane().add(misionLabel);
 		
 		JLabel objetivoLabel = new JLabel("OBJETIVO: Enviar un mensaje secreto entre todos los espias sin ser detectados.");
@@ -74,89 +81,147 @@ public class principal {
 		objetivoLabel.setBounds(64, 58, 649, 14);
 		frmTemibleOperarioDel.getContentPane().add(objetivoLabel);
 		
-		JLabel indicadorConexionesContainer = new JLabel("Conexiones:");
-		indicadorConexionesContainer.setFont(new Font("Miriam Mono CLM", Font.PLAIN, 11));
-		indicadorConexionesContainer.setBounds(535, 127, 81, 14);
+		JLabel indicadorConexionesContainer = new JLabel("Conexiones");
+		indicadorConexionesContainer.setHorizontalAlignment(SwingConstants.CENTER);
+		indicadorConexionesContainer.setFont(new Font("Miriam Mono CLM", Font.BOLD, 11));
+		indicadorConexionesContainer.setBounds(487, 127, 165, 14);
 		frmTemibleOperarioDel.getContentPane().add(indicadorConexionesContainer);
 		
-		JPanel espiasContainer = new JPanel();
+		espiasContainer = new JPanel();
+		espiasContainer.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		espiasContainer.setBackground(Color.WHITE);
 		espiasContainer.setBounds(64, 152, 165, 216);
 		frmTemibleOperarioDel.getContentPane().add(espiasContainer);
+		espiasContainer.setLayout(new GridLayout(10, 0, 0, 0));
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		espiasContainer.add(lblNewLabel);
 		
-		JPopupMenu popupMenu = new JPopupMenu();
-		popupMenu.setFont(new Font("Miriam Mono CLM", Font.PLAIN, 12));
-		addPopup(lblNewLabel, popupMenu);
-		
-		JButton btnNewButton_2 = new JButton("Eliminar");
-		btnNewButton_2.setFont(new Font("Miriam Mono CLM", Font.PLAIN, 11));
-		popupMenu.add(btnNewButton_2);
-		
-		JPanel conexionesContainer = new JPanel();
+		conexionesContainer = new JPanel();
+		conexionesContainer.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		conexionesContainer.setBackground(Color.WHITE);
-		conexionesContainer.setBounds(496, 152, 155, 216);
+		conexionesContainer.setBounds(487, 152, 165, 216);
 		frmTemibleOperarioDel.getContentPane().add(conexionesContainer);
+		conexionesContainer.setLayout(new GridLayout(10, 0, 0, 0));
 		
-		JLabel indicadorInputEspias = new JLabel("Entrenar espia");
-		indicadorInputEspias.setFont(new Font("Miriam Mono CLM", Font.PLAIN, 11));
-		indicadorInputEspias.setBounds(295, 151, 112, 14);
+		JLabel indicadorInputEspias = new JLabel("Reclutar espia");
+		indicadorInputEspias.setHorizontalAlignment(SwingConstants.CENTER);
+		indicadorInputEspias.setFont(new Font("Miriam Mono CLM", Font.BOLD, 11));
+		indicadorInputEspias.setBounds(275, 127, 166, 14);
 		frmTemibleOperarioDel.getContentPane().add(indicadorInputEspias);
 		
-		inputEspias = new JTextField();
-		inputEspias.setFont(new Font("Miriam Mono CLM", Font.PLAIN, 11));
-		inputEspias.setBounds(305, 176, 86, 20);
-		frmTemibleOperarioDel.getContentPane().add(inputEspias);
-		inputEspias.setColumns(10);
+		inputEspia = new JTextField();
+		inputEspia.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyChar() == java.awt.event.KeyEvent.VK_ENTER) {
+					String nombreEspia = inputEspia.getText();
+					if(nombreEspia == "") {
+						return;
+					}else {
+						grafo.agregarEspia(nombreEspia);
+						Etiqueta ESTOQUIEROANADIR = new Etiqueta(nombreEspia);
+						espiasContainer.add(ESTOQUIEROANADIR);
+						inputEspia.setText("");
+						espiasContainer.repaint();
+						espiasContainer.revalidate();
+						System.out.println(grafo.getListaDeEspias());
+						System.out.println(espiasContainer.getComponentCount());
+					}									
+				}
+			}
+		});
+		inputEspia.setFont(new Font("Miriam Mono CLM", Font.PLAIN, 11));
+		inputEspia.setBounds(316, 152, 85, 20);
+		frmTemibleOperarioDel.getContentPane().add(inputEspia);
+		inputEspia.setColumns(10);
 		
 		JLabel indicadorInputConexiones = new JLabel("Anadir conexiones");
-		indicadorInputConexiones.setFont(new Font("Miriam Mono CLM", Font.PLAIN, 11));
-		indicadorInputConexiones.setBounds(295, 207, 125, 14);
+		indicadorInputConexiones.setHorizontalAlignment(SwingConstants.CENTER);
+		indicadorInputConexiones.setFont(new Font("Miriam Mono CLM", Font.BOLD, 11));
+		indicadorInputConexiones.setBounds(275, 183, 166, 14);
 		frmTemibleOperarioDel.getContentPane().add(indicadorInputConexiones);
 		
-		JButton btnNewButton = new JButton("ENVIAR MENSAJE");
-		btnNewButton.setFont(new Font("Miriam Mono CLM", Font.BOLD, 11));
-		btnNewButton.setBounds(284, 378, 136, 23);
-		frmTemibleOperarioDel.getContentPane().add(btnNewButton);
+		JButton enviarMensajeButton = new JButton("ENVIAR MENSAJE");
+		enviarMensajeButton.setFont(new Font("Miriam Mono CLM", Font.BOLD, 11));
+		enviarMensajeButton.setBounds(290, 390, 136, 23);
+		frmTemibleOperarioDel.getContentPane().add(enviarMensajeButton);
 		
 		JPanel formConexionesContainer = new JPanel();
-		formConexionesContainer.setBorder(new LineBorder(new Color(0, 0, 0)));
-		formConexionesContainer.setBounds(295, 232, 112, 125);
+		formConexionesContainer.setBounds(275, 197, 171, 171);
 		frmTemibleOperarioDel.getContentPane().add(formConexionesContainer);
 		formConexionesContainer.setLayout(null);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"espia 1", "espia 2"}));
-		comboBox.setToolTipText("espia");
-		comboBox.setBounds(10, 11, 92, 22);
-		formConexionesContainer.add(comboBox);
+		JComboBox comboBoxEspia1 = new JComboBox();
+		comboBoxEspia1.setModel(new DefaultComboBoxModel(new String[] {"espia 1", "espia 2"}));
+		comboBoxEspia1.setToolTipText("espia");
+		comboBoxEspia1.setBounds(36, 11, 92, 22);
+		formConexionesContainer.add(comboBoxEspia1);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setToolTipText("ELEGIR UN ESPIA");
-		comboBox_1.setBounds(10, 44, 92, 22);
-		formConexionesContainer.add(comboBox_1);
+		JComboBox comboBoxEspia2 = new JComboBox();
+		comboBoxEspia2.setToolTipText("ELEGIR UN ESPIA");
+		comboBoxEspia2.setBounds(36, 44, 92, 22);
+		formConexionesContainer.add(comboBoxEspia2);
 		
-		JButton btnNewButton_1 = new JButton("+");
-		btnNewButton_1.setBounds(26, 91, 54, 23);
-		formConexionesContainer.add(btnNewButton_1);
-	}
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
+		JSlider probabilidadDeExito = new JSlider();
+		probabilidadDeExito.setMaximum(100);
+		probabilidadDeExito.setBounds(10, 87, 151, 40);
+		probabilidadDeExito.setMajorTickSpacing(20);
+		probabilidadDeExito.setPaintTicks(true);
+		
+		
+		Hashtable labelTable = new Hashtable();
+		labelTable.put( 0, new JLabel("0") );
+		labelTable.put( 100, new JLabel("100") );
+		probabilidadDeExito.setLabelTable(labelTable);
+		
+		probabilidadDeExito.setPaintLabels(true);
+		
+		formConexionesContainer.add(probabilidadDeExito);
+		
+		JLabel indicadorProbabilidadDeExito = new JLabel("Probabilidad de exito");
+		indicadorProbabilidadDeExito.setHorizontalAlignment(SwingConstants.CENTER);
+		indicadorProbabilidadDeExito.setFont(new Font("Miriam Mono CLM", Font.BOLD, 11));
+		indicadorProbabilidadDeExito.setBounds(0, 70, 171, 14);
+		formConexionesContainer.add(indicadorProbabilidadDeExito);
+		
+		JButton agregarConexionButton = new JButton("+");
+		agregarConexionButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String espia1 = comboBoxEspia1.getActionCommand();
+				String espia2 = comboBoxEspia2.getActionCommand();
+				int probabilidadIntercepcion = 100 - probabilidadDeExito.getValue();
+				try {
+					return;
 				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
+				catch(Error err) {
+					MessageWindow errorMensaje = new MessageWindow("Error", err.toString());
+					errorMensaje.setVisible(true);
 				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
+				
 			}
 		});
+		agregarConexionButton.setBounds(55, 138, 54, 23);
+		formConexionesContainer.add(agregarConexionButton);
+		
+	}
+	
+	
+	public void actualizarEspias() {
+		for(String e : grafo.getListaDeEspias()) {
+			if(!grafo.getListaDeEspias().contains(e)) {
+				JLabel temp = new JLabel(e);
+				espiasContainer.add(temp);
+			}
+		}
+	}
+	
+	public void actualizarConexiones() {
+		
+	}
+
+	@Override
+	public void actualizar() {
+		
+		
 	}
 }
