@@ -30,6 +30,21 @@ public class ObjetoArista implements Comparable<ObjetoArista>{
 			return espia2;
 		}
 		
+		public ObjetoArista setEspia1(String espia1) {
+			this.espia1 = espia1;
+			return this;
+		}
+
+		public ObjetoArista setEspia2(String espia2) {
+			this.espia2 = espia2;
+			return this;
+		}
+
+		public ObjetoArista setPosibilidadDeIntercepcion(Integer posibilidadDeIntercepcion) {
+			this.posibilidadDeIntercepcion = posibilidadDeIntercepcion;
+			return this;
+		}
+
 		public Integer getPosibilidadDeIntercepcion() {
 			return posibilidadDeIntercepcion;
 		}
@@ -70,8 +85,7 @@ public class ObjetoArista implements Comparable<ObjetoArista>{
 		
 		@Override
 		public String toString() {
-			return "ObjetoArista [espia1=" + espia1 + ", espia2=" + espia2 + ", posibilidadDeIntercepcion="
-					+ posibilidadDeIntercepcion + "]";
+			return espia1 + "--->" + espia2;
 		}
 
 		
