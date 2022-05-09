@@ -176,7 +176,7 @@ public class principal implements Observador{
 				}else {
 					boolean isConexionAgregada = grafo.agregarRelacionEntreEspias(espia1, espia2, probabilidadIntercepcion);
 					if(isConexionAgregada){
-						String nombreConexion = espia1 + " ---> " + espia2;
+						String nombreConexion = espia1 + " <---> " + espia2;
 						conexionesContainer.add(crearEtiquetaConexion(nombreConexion));
 						actualizarVistaContainer(conexionesContainer);
 					}
@@ -271,7 +271,6 @@ public class principal implements Observador{
 	}
 	
 	private Observador getPrincipal() {
-		// TODO Auto-generated method stub
 		return this;
 	}
 	

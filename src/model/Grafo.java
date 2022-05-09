@@ -79,8 +79,13 @@ public class Grafo {
 		chequearRelacionesCirculares(espia1,espia2);
 
 		ObjetoArista aristaNueva = new ObjetoArista(espia1, espia2, peso);
-
-		if (!listaDeAristas.contains(aristaNueva)) {
+		boolean isAristaExistente = false;
+		
+		for (ObjetoArista a : listaDeAristas) {
+			if(a.equals(aristaNueva)) isAristaExistente = true;
+		}
+		
+		if (!isAristaExistente) {
 			listaDeAristas.add(aristaNueva);
 			agregarAListaDeVecinos(espia1, espia2);
 			agregarAListaDeVecinos(espia2, espia1);
