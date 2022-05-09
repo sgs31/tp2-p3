@@ -70,6 +70,8 @@ public class Grafo {
 	
 	 public boolean agregarRelacionEntreEspias(String espia1, String espia2, Integer peso) {
 		 
+		chequearAristaNegativa(peso); 
+		 
 		boolean aristaAgregada = false;
 		
 		if(!espias.contains(espia1) || !espias.contains(espia2)) return aristaAgregada;
@@ -86,6 +88,12 @@ public class Grafo {
 		}
 		
 		return aristaAgregada;
+	}
+
+	void chequearAristaNegativa(int peso) {
+		if (peso < 0) {
+			throw new IllegalArgumentException("Ingresaste un peso de arista negativo");
+		}
 	}
 	
 	void chequearRelacionesCirculares(String espia1, String espia2) {

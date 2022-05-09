@@ -1,10 +1,12 @@
-package model;
+package testCase;
 
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import org.junit.Before;
 import org.junit.Test;
+
+import model.ObjetoArista;
 
 public class RelacionEntreEspiasTest {
 	
