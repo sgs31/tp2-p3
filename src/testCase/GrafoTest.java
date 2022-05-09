@@ -1,10 +1,12 @@
-package model;
+package testCase;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import model.Grafo;
 
 public class GrafoTest {
 	
@@ -46,6 +48,17 @@ public class GrafoTest {
 		
 		assertTrue(g.agregarRelacionEntreEspias("Tom", "Juan", 2));
 		assertEquals(1, g.getCantidadDeRelaciones());		
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void agregarRelacionNegativaTest(){
+		
+		Grafo g = new Grafo();
+		
+		g.agregarEspia("Tom");
+		g.agregarEspia("Juan");
+		
+		g.agregarRelacionEntreEspias("Tom", "Juan", -2);
 	}
 	
 	@Test

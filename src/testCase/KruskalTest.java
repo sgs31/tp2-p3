@@ -1,8 +1,17 @@
-package model;
+package testCase;
 
-public class Prueba {
+import static org.junit.Assert.*;
 
-	public static void main(String[] args) {
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import model.Grafo;
+import model.Kruskal;
+
+public class KruskalTest {
+	
+	public Grafo constructorGrafo() {
 		
 		Grafo g = new Grafo();
 		
@@ -22,13 +31,17 @@ public class Prueba {
 		g.agregarRelacionEntreEspias("Alicia", "Jhon", 3);
 		g.agregarRelacionEntreEspias("Jhon", "Doe", 11);
 		
-		System.out.print(g.toString());
-		
-		Kruskal k = new Kruskal(g);
-		k.arbolGeneradorMinimo();
-		
-		System.out.print(k.toString());
-		
+		return g;
 	}
-
+	
+	
+	@Test
+	public void cantidadDeAristasEnArbolMinimo() {
+		
+		Kruskal k = new Kruskal(constructorGrafo());
+		Grafo arbolMinimo = k.arbolGeneradorMinimo();
+		
+		assertEquals(6,arbolMinimo.getCantidadDeRelaciones());
+	}
+	
 }
