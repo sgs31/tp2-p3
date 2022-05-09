@@ -35,6 +35,25 @@ public class Grafo {
 
 		return agregado;
 	}
+	
+	public boolean eliminarEspia(String nombre) {
+		boolean temp = false;
+		if(espias.contains(nombre)) {
+			ArrayList<ObjetoArista> aux = new ArrayList<>();
+			for(ObjetoArista a : listaDeAristas) {
+				if(a.isEspiaEnRelacion(nombre));
+				aux.add(a);
+			}
+			for(ObjetoArista a : aux) {
+				listaDeAristas.remove(a);
+			}
+			listaDeVecinos.remove(nombre);
+			temp = true;
+		}
+		espias.remove(nombre);
+	
+		return temp;
+	}
 
 	private void chequearEspiaExistenteEnGrafo(String posibleEspia) {
 		if (espias.contains(posibleEspia) ) {
@@ -50,8 +69,7 @@ public class Grafo {
 	
 	
 	 public boolean agregarRelacionEntreEspias(String espia1, String espia2, Integer peso) {
-		 //Hacer funcion que chequee que la arista no sea negativa
-		 //Chequear que los espias existen
+		 
 		boolean aristaAgregada = false;
 		
 		if(!espias.contains(espia1) || !espias.contains(espia2)) return aristaAgregada;
@@ -94,9 +112,10 @@ public class Grafo {
 				aux.setEspia1(espia1).setEspia2(espia2).setPosibilidadDeIntercepcion(r.getPosibilidadDeIntercepcion());
 				eliminarVecinoAlEspia(espia1, espia2);
 				eliminarVecinoAlEspia(espia2, espia1);
-				listaDeAristas.remove(aux);
+				
 			}
 		}
+		listaDeAristas.remove(aux);
 	}
 
 	private void eliminarVecinoAlEspia(String espia1, String espia2) {

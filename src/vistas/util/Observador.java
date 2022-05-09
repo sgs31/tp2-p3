@@ -1,5 +1,5 @@
 package vistas.util;
 
 public interface Observador {
-	public void actualizar();
+	public void actualizar(Sujeto tipo);
 }
