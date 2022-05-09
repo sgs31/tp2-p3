@@ -227,6 +227,16 @@ public class principal implements Observador{
 		frmTemibleOperarioDel.getContentPane().add(inputEspia);
 		inputEspia.setColumns(10);
 		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println(grafo.getRelacionesEntreEspias().toString());
+			}
+		});
+		btnNewButton.setBounds(64, 389, 89, 23);
+		frmTemibleOperarioDel.getContentPane().add(btnNewButton);
+		
 		System.out.println(conexionesContainer.getComponentCount());
 	}
 	
@@ -242,7 +252,7 @@ public class principal implements Observador{
 	}
 
 	public void actualizarConexiones() {
-		for (int i = 0; i < grafo.getListaDeEspias().size(); i++) {
+		for (int i = 0; i < grafo.getRelacionesEntreEspias().size(); i++) {
 			Etiqueta aux = new Etiqueta(grafo.getRelacionesEntreEspias().get(i).toString(), i, grafo, getPrincipal(), Sujeto.CONEXION);
 			conexionesContainer.add(aux);
 		}
@@ -273,6 +283,4 @@ public class principal implements Observador{
 	private Observador getPrincipal() {
 		return this;
 	}
-	
-	
 }
