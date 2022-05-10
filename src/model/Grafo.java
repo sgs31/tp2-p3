@@ -190,7 +190,6 @@ public class Grafo {
 		String listaEspias = "Espias: ";
 		String relaciones = "Relaciones: ";
 		
-		
 		return listaEspias + espias.toString() + ". Relaciones: " + this.listaDeVecinos.toString(); 
 	}
 	

@@ -15,6 +15,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.border.LineBorder;
 
 import model.Grafo;
+import model.Kruskal;
 import vistas.util.MessageWindow;
 import vistas.util.Observador;
 import vistas.util.Sujeto;
@@ -63,14 +64,14 @@ public class principal implements Observador{
 		principal ref = this;
 		frmTemibleOperarioDel = new JFrame();
 		frmTemibleOperarioDel.setTitle("Temible operario del recontraespionaje");
-		frmTemibleOperarioDel.setBounds(100, 100, 734, 491);
+		frmTemibleOperarioDel.setBounds(100, 100, 731, 491);
 		frmTemibleOperarioDel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmTemibleOperarioDel.getContentPane().setLayout(null);
 		
 		JLabel indicadorEspiasContainer = new JLabel("Nuestros espias");
 		indicadorEspiasContainer.setHorizontalAlignment(SwingConstants.CENTER);
 		indicadorEspiasContainer.setFont(new Font("Miriam Mono CLM", Font.BOLD, 11));
-		indicadorEspiasContainer.setBounds(64, 123, 165, 23);
+		indicadorEspiasContainer.setBounds(44, 123, 185, 23);
 		frmTemibleOperarioDel.getContentPane().add(indicadorEspiasContainer);
 		
 		JLabel misionLabel = new JLabel("MISION: Temible operario del recontraespionaje.");
@@ -86,13 +87,13 @@ public class principal implements Observador{
 		JLabel indicadorConexionesContainer = new JLabel("Conexiones");
 		indicadorConexionesContainer.setHorizontalAlignment(SwingConstants.CENTER);
 		indicadorConexionesContainer.setFont(new Font("Miriam Mono CLM", Font.BOLD, 11));
-		indicadorConexionesContainer.setBounds(487, 127, 165, 14);
+		indicadorConexionesContainer.setBounds(486, 127, 189, 14);
 		frmTemibleOperarioDel.getContentPane().add(indicadorConexionesContainer);
 		
 		espiasContainer = new JPanel();
 		espiasContainer.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		espiasContainer.setBackground(Color.WHITE);
-		espiasContainer.setBounds(64, 152, 165, 216);
+		espiasContainer.setBounds(44, 157, 189, 216);
 		frmTemibleOperarioDel.getContentPane().add(espiasContainer);
 		espiasContainer.setLayout(new GridLayout(10, 0, 0, 0));
 		
@@ -100,7 +101,7 @@ public class principal implements Observador{
 		conexionesContainer = new JPanel();
 		conexionesContainer.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		conexionesContainer.setBackground(Color.WHITE);
-		conexionesContainer.setBounds(487, 152, 165, 216);
+		conexionesContainer.setBounds(486, 157, 189, 216);
 		frmTemibleOperarioDel.getContentPane().add(conexionesContainer);
 		conexionesContainer.setLayout(new GridLayout(10, 0, 0, 0));
 		
@@ -115,16 +116,30 @@ public class principal implements Observador{
 		JLabel indicadorInputConexiones = new JLabel("Anadir conexiones");
 		indicadorInputConexiones.setHorizontalAlignment(SwingConstants.CENTER);
 		indicadorInputConexiones.setFont(new Font("Miriam Mono CLM", Font.BOLD, 11));
-		indicadorInputConexiones.setBounds(275, 183, 166, 14);
+		indicadorInputConexiones.setBounds(275, 184, 166, 14);
 		frmTemibleOperarioDel.getContentPane().add(indicadorInputConexiones);
 		
 		JButton enviarMensajeButton = new JButton("ENVIAR MENSAJE");
+		enviarMensajeButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(grafo.getRelacionesEntreEspias().size() == 0) {
+					MessageWindow error = new MessageWindow("Error", "Debe existe al menos una conexion entre espias");
+					error.setVisible(true);
+				}else {
+					Kruskal kruskal = new Kruskal(grafo);
+					Grafo nuevoGrafo = kruskal.arbolGeneradorMinimo();
+					Resultados resultados = new Resultados(nuevoGrafo);
+					resultados.setVisible(true);
+				}	
+			}
+		});
 		enviarMensajeButton.setFont(new Font("Miriam Mono CLM", Font.BOLD, 11));
 		enviarMensajeButton.setBounds(290, 390, 136, 23);
 		frmTemibleOperarioDel.getContentPane().add(enviarMensajeButton);
 		
 		JPanel formConexionesContainer = new JPanel();
-		formConexionesContainer.setBounds(275, 197, 171, 171);
+		formConexionesContainer.setBounds(270, 202, 171, 171);
 		frmTemibleOperarioDel.getContentPane().add(formConexionesContainer);
 		formConexionesContainer.setLayout(null);
 		
@@ -226,16 +241,6 @@ public class principal implements Observador{
 		inputEspia.setBounds(316, 152, 85, 20);
 		frmTemibleOperarioDel.getContentPane().add(inputEspia);
 		inputEspia.setColumns(10);
-		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				System.out.println(grafo.getRelacionesEntreEspias().toString());
-			}
-		});
-		btnNewButton.setBounds(64, 389, 89, 23);
-		frmTemibleOperarioDel.getContentPane().add(btnNewButton);
 		
 		System.out.println(conexionesContainer.getComponentCount());
 	}
