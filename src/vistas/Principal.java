@@ -122,15 +122,21 @@ public class Principal implements Observador{
 		enviarMensajeButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(grafo.getRelacionesEntreEspias().size() == 0) {
-					MessageWindow error = new MessageWindow("Error", "Debe existe al menos una conexion entre espias");
+				if(!grafo.isGrafoConexo()) {
+					MessageWindow error = new MessageWindow("Error", "Debe existe una via de comunicacion entre todos los espias");
 					error.setVisible(true);
 				}else {
-					Kruskal kruskal = new Kruskal(grafo);
-					Grafo nuevoGrafo = kruskal.arbolGeneradorMinimo();
-					Resultados resultados = new Resultados(nuevoGrafo);
-					resultados.setVisible(true);
-				}	
+					if(grafo.getRelacionesEntreEspias().size() == 0) {
+						MessageWindow error = new MessageWindow("Error", "Debe existe al menos una conexion entre espias");
+						error.setVisible(true);
+					}else {
+						Kruskal kruskal = new Kruskal(grafo);
+						Grafo nuevoGrafo = kruskal.arbolGeneradorMinimo();
+						Resultados resultados = new Resultados(nuevoGrafo);
+						resultados.setVisible(true);
+					}	
+				}
+				
 			}
 		});
 		enviarMensajeButton.setFont(new Font("Miriam Mono CLM", Font.BOLD, 11));

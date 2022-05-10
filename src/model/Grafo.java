@@ -186,6 +186,10 @@ public class Grafo {
 		this.listaDeVecinos = new HashMap<String, HashSet<String>>();
 	}
 	
+	public boolean isGrafoConexo() {
+		return BFS.esConexo(this);
+	}
+	
 	public String toString() {
 		String listaEspias = "Espias: ";
 		String relaciones = "Relaciones: ";

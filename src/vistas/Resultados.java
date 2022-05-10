@@ -56,8 +56,7 @@ public class Resultados extends JDialog {
 		informeContainer.setBackground(Color.WHITE);
 		informeContainer.setBounds(0, 38, 429, 189);
 		contentPanel.add(informeContainer);
-//		panel_1.setLayout(new GridLayout(grafo.getRelacionesEntreEspias().size(), 0, 0, 0));
-		informeContainer.setLayout(new GridLayout(3, 0, 0, 0));
+		informeContainer.setLayout(new GridLayout(grafo.getRelacionesEntreEspias().size(), 0, 0, 0));
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(0, 238, 436, -11);
