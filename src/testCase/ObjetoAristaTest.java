@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import model.ObjetoArista;
 
-public class RelacionEntreEspiasTest {
+public class ObjetoAristaTest {
 	
 	ArrayList<ObjetoArista> relaciones;
 	
