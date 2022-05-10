@@ -70,7 +70,7 @@ public class ObjetoArista implements Comparable<ObjetoArista>{
 			if (getClass() != obj.getClass())
 				return false;
 			ObjetoArista other = (ObjetoArista) obj;
-			return isEspiaEnRelacion(other.espia1) && isEspiaEnRelacion(other.espia2);
+			return isEspiaEnRelacion(other.getEspia1()) && isEspiaEnRelacion(other.getEspia2());
 		}
 
 		@Override
@@ -85,7 +85,7 @@ public class ObjetoArista implements Comparable<ObjetoArista>{
 		
 		@Override
 		public String toString() {
-			return espia1 + "--->" + espia2;
+			return espia1 + " <---> " + espia2 + " | % Intercepcion: " + posibilidadDeIntercepcion;
 		}
 
 		

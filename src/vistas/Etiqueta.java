@@ -3,12 +3,18 @@ package vistas;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import model.Grafo;
+import model.ObjetoArista;
+import vistas.util.MessageWindow;
 import vistas.util.Observador;
 import vistas.util.Sujeto;
 import vistas.util.SujetoObservable;
 
 import javax.swing.JPopupMenu;
+
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -19,18 +25,25 @@ public class Etiqueta<T> extends JLabel implements SujetoObservable  {
 	
 	private Observador observador;
 	private String nombre;
-	private ArrayList<T> container;
+	private Grafo grafo;
 	private int id;
-//	, ArrayList<T> container, int id, Observador o
+	private Sujeto tipo;
 	
-	public Etiqueta(String nombre) {
+	public Etiqueta(String nombre, int id, Grafo g, Observador o, Sujeto tipo) {
 		this.nombre = nombre;
-//		this.observador = o;
-//		this.container = container;
-//		this.id = id;
+		this.observador = o;
+		this.grafo = g;
+		this.id = id;
 		
 		setText(this.nombre);
 		setHorizontalAlignment(SwingConstants.CENTER);
+		setFont(new Font("Miriam Mono CLM", Font.BOLD, 11));
+		
+		if(id%2 == 0) {
+			setForeground(Color.BLACK);
+		}else {
+			setForeground(Color.gray);
+		}
 		
 		JPopupMenu popupMenu = new JPopupMenu();
 		addPopup(this, popupMenu);
@@ -39,8 +52,19 @@ public class Etiqueta<T> extends JLabel implements SujetoObservable  {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				container.remove(id);
-				observador.actualizar();
+				if(tipo == Sujeto.ESPIA) {
+					if(g.getVecinosDeUnEspia(nombre).size() == 0) {
+						g.eliminarEspia(nombre);
+						notificar(tipo);
+					}else{
+						MessageWindow error = new MessageWindow("Error", "No puede eliminar un espia que ya tiene conexion con otro.");
+						error.setVisible(true);
+					}
+				}else {
+					ObjetoArista temp = g.getRelacionesEntreEspias().get(id);
+					g.eliminarRelacionEntreEspias(temp.getEspia1(), temp.getEspia2());
+					notificar(tipo);
+				}
 			}
 		});
 		popupMenu.add(btnNewButton);
@@ -63,8 +87,7 @@ public class Etiqueta<T> extends JLabel implements SujetoObservable  {
 		});
 	}
 	@Override
-	public void notificar() {
-		// TODO Auto-generated method stub
-		
+	public void notificar(Sujeto tipo) {
+		observador.actualizar(tipo);
 	}
 }

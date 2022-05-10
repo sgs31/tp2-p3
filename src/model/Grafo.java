@@ -35,6 +35,25 @@ public class Grafo {
 
 		return agregado;
 	}
+	
+	public boolean eliminarEspia(String nombre) {
+		boolean temp = false;
+		if(espias.contains(nombre)) {
+			ArrayList<ObjetoArista> aux = new ArrayList<>();
+			for(ObjetoArista a : listaDeAristas) {
+				if(a.isEspiaEnRelacion(nombre));
+				aux.add(a);
+			}
+			for(ObjetoArista a : aux) {
+				listaDeAristas.remove(a);
+			}
+			listaDeVecinos.remove(nombre);
+			temp = true;
+		}
+		espias.remove(nombre);
+	
+		return temp;
+	}
 
 	private void chequearEspiaExistenteEnGrafo(String posibleEspia) {
 		if (espias.contains(posibleEspia) ) {
@@ -50,8 +69,8 @@ public class Grafo {
 	
 	
 	 public boolean agregarRelacionEntreEspias(String espia1, String espia2, Integer peso) {
-		
-		 chequearAristaNegativa(peso); 
+		 
+		chequearAristaNegativa(peso); 
 		 
 		boolean aristaAgregada = false;
 		
@@ -60,8 +79,13 @@ public class Grafo {
 		chequearRelacionesCirculares(espia1,espia2);
 
 		ObjetoArista aristaNueva = new ObjetoArista(espia1, espia2, peso);
-
-		if (!listaDeAristas.contains(aristaNueva)) {
+		boolean isAristaExistente = false;
+		
+		for (ObjetoArista a : listaDeAristas) {
+			if(a.equals(aristaNueva)) isAristaExistente = true;
+		}
+		
+		if (!isAristaExistente) {
 			listaDeAristas.add(aristaNueva);
 			agregarAListaDeVecinos(espia1, espia2);
 			agregarAListaDeVecinos(espia2, espia1);
@@ -101,9 +125,10 @@ public class Grafo {
 				aux.setEspia1(espia1).setEspia2(espia2).setPosibilidadDeIntercepcion(r.getPosibilidadDeIntercepcion());
 				eliminarVecinoAlEspia(espia1, espia2);
 				eliminarVecinoAlEspia(espia2, espia1);
-				listaDeAristas.remove(aux);
+				
 			}
 		}
+		listaDeAristas.remove(aux);
 	}
 
 	private void eliminarVecinoAlEspia(String espia1, String espia2) {
@@ -164,7 +189,6 @@ public class Grafo {
 	public String toString() {
 		String listaEspias = "Espias: ";
 		String relaciones = "Relaciones: ";
-		
 		
 		return listaEspias + espias.toString() + ". Relaciones: " + this.listaDeVecinos.toString(); 
 	}
