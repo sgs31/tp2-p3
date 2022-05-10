@@ -85,8 +85,10 @@ public class ObjetoArista implements Comparable<ObjetoArista>{
 		
 		@Override
 		public String toString() {
-			return espia1 + " <---> " + espia2 + " | % Intercepcion: " + posibilidadDeIntercepcion;
+			return espia1 + " y " + espia2 + " | posibilidad de ser interceptado: %" + posibilidadDeIntercepcion;
 		}
-
 		
+		public String toStringSinIntercepcion() {
+			return espia1 + " <---> " + espia2;
+		}		
 }

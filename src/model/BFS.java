@@ -9,7 +9,6 @@ public class BFS {
 	private static boolean [] marcados;
 	private static ArrayList<String> L;
 	
-	
 	public static boolean esConexo(Grafo g) {
 		if(g==null) {
 			throw new IllegalArgumentException("El grafo es no existe.");
@@ -18,8 +17,7 @@ public class BFS {
 		if(g.getCantidadDeEspias()==0) {
 			return true;
 		}
-		return alcanzables(g, g.getEspia(0)).size()==g.getCantidadDeEspias();
-			
+		return alcanzables(g, g.getEspia(0)).size()==g.getCantidadDeEspias();		
 	}
 	
 	public static Set<String> alcanzables(Grafo g, String espiaOrigen){
@@ -46,7 +44,6 @@ public class BFS {
 	}
 
 	private static void agregarVecinosPendientes(Grafo g, String i) {
-
 		for (String espia : g.getVecinosDeUnEspia(i)) {
 			
 		if (marcados[g.indiceEspia(espia)] == false && !L.contains(espia)) 

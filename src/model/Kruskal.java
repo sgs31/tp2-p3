@@ -20,7 +20,7 @@ public class Kruskal {
 
 		Grafo arbolGenMin = new Grafo(grafo.getListaDeEspias());
 
-		Collections.sort(listaDeRelaciones);// ordena segun el peso de las aristas
+		Collections.sort(listaDeRelaciones);
 
 		int posicion = 0;
 		int cantidadAristas = listaDeRelaciones.size();

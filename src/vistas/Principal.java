@@ -31,8 +31,9 @@ import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import java.awt.Rectangle;
 import java.awt.GridLayout;
+import javax.swing.ImageIcon;
 
-public class principal implements Observador{
+public class Principal implements Observador{
 	
 	private JFrame frmTemibleOperarioDel;
 	private JTextField inputEspia;
@@ -46,7 +47,7 @@ public class principal implements Observador{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					principal window = new principal();
+					Principal window = new Principal();
 					window.frmTemibleOperarioDel.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,13 +56,13 @@ public class principal implements Observador{
 		});
 	}
 
-	public principal() {
+	public Principal() {
 		grafo = new Grafo();
 		initialize();
 	}
 
 	private void initialize() {
-		principal ref = this;
+		Principal ref = this;
 		frmTemibleOperarioDel = new JFrame();
 		frmTemibleOperarioDel.setTitle("Temible operario del recontraespionaje");
 		frmTemibleOperarioDel.setBounds(100, 100, 731, 491);
@@ -76,18 +77,18 @@ public class principal implements Observador{
 		
 		JLabel misionLabel = new JLabel("MISION: Temible operario del recontraespionaje.");
 		misionLabel.setFont(new Font("Miriam Mono CLM", Font.BOLD, 14));
-		misionLabel.setBounds(64, 11, 588, 36);
+		misionLabel.setBounds(44, 11, 588, 36);
 		frmTemibleOperarioDel.getContentPane().add(misionLabel);
 		
 		JLabel objetivoLabel = new JLabel("OBJETIVO: Enviar un mensaje secreto entre todos los espias sin ser detectados.");
 		objetivoLabel.setFont(new Font("Miriam Mono CLM", Font.BOLD, 14));
-		objetivoLabel.setBounds(64, 58, 649, 14);
+		objetivoLabel.setBounds(44, 58, 649, 14);
 		frmTemibleOperarioDel.getContentPane().add(objetivoLabel);
 		
 		JLabel indicadorConexionesContainer = new JLabel("Conexiones");
 		indicadorConexionesContainer.setHorizontalAlignment(SwingConstants.CENTER);
 		indicadorConexionesContainer.setFont(new Font("Miriam Mono CLM", Font.BOLD, 11));
-		indicadorConexionesContainer.setBounds(486, 127, 189, 14);
+		indicadorConexionesContainer.setBounds(486, 127, 189, 19);
 		frmTemibleOperarioDel.getContentPane().add(indicadorConexionesContainer);
 		
 		espiasContainer = new JPanel();
@@ -110,9 +111,7 @@ public class principal implements Observador{
 		indicadorInputEspias.setFont(new Font("Miriam Mono CLM", Font.BOLD, 11));
 		indicadorInputEspias.setBounds(275, 127, 166, 14);
 		frmTemibleOperarioDel.getContentPane().add(indicadorInputEspias);
-		
-		
-		
+			
 		JLabel indicadorInputConexiones = new JLabel("Anadir conexiones");
 		indicadorInputConexiones.setHorizontalAlignment(SwingConstants.CENTER);
 		indicadorInputConexiones.setFont(new Font("Miriam Mono CLM", Font.BOLD, 11));
@@ -242,9 +241,19 @@ public class principal implements Observador{
 		frmTemibleOperarioDel.getContentPane().add(inputEspia);
 		inputEspia.setColumns(10);
 		
-		System.out.println(conexionesContainer.getComponentCount());
+		JButton resetButton = new JButton("LIMPIAR");
+		resetButton.setFont(new Font("Miriam Mono CLM", Font.BOLD, 11));
+		resetButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				reset();
+			}
+		});
+		resetButton.setToolTipText("Reset");
+		resetButton.setIcon(null);
+		resetButton.setBounds(316, 418, 85, 23);
+		frmTemibleOperarioDel.getContentPane().add(resetButton);
 	}
-	
 	
 	public void actualizarEspias() {
 		for (int i = 0; i < grafo.getListaDeEspias().size(); i++) {
@@ -258,7 +267,7 @@ public class principal implements Observador{
 
 	public void actualizarConexiones() {
 		for (int i = 0; i < grafo.getRelacionesEntreEspias().size(); i++) {
-			Etiqueta aux = new Etiqueta(grafo.getRelacionesEntreEspias().get(i).toString(), i, grafo, getPrincipal(), Sujeto.CONEXION);
+			Etiqueta aux = new Etiqueta(grafo.getRelacionesEntreEspias().get(i).toStringSinIntercepcion(), i, grafo, getPrincipal(), Sujeto.CONEXION);
 			conexionesContainer.add(aux);
 		}
 	}
@@ -287,5 +296,15 @@ public class principal implements Observador{
 	
 	private Observador getPrincipal() {
 		return this;
+	}
+	
+	private void reset() {
+		grafo = new Grafo();
+		conexionesContainer.removeAll();
+		espiasContainer.removeAll();
+		comboBoxEspia1.removeAllItems();
+		comboBoxEspia2.removeAllItems();
+		actualizarVistaContainer(espiasContainer);
+		actualizarVistaContainer(conexionesContainer);
 	}
 }

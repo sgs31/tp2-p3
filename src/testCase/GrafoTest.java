@@ -93,7 +93,5 @@ public class GrafoTest {
 		
 		g.agregarRelacionEntreEspias("jose", "maria", 2);
 		assertEquals(0,g.getListaDeVecinos().size());
-	}
-	
-	
+	}	
 }
